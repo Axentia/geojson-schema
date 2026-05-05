@@ -49,3 +49,40 @@ To publish the [`geojson-schema` package](https://www.npmjs.com/package/geojson-
     make build
     git push --tags origin main
     pushd build && npm publish && popd
+
+## Publishing this fork to GitHub Packages
+
+GitHub Packages for npm requires a scoped package name.  This repository includes a workflow that publishes on version tags (`v*.*.*`) and rewrites the built package name to:
+
+    @<github-owner>/geojson-schema
+
+### One-time setup
+
+1. Enable Actions in your fork.
+2. Ensure the default branch is `main`.
+3. Make sure your fork has package write access for `GITHUB_TOKEN` (the workflow sets `packages: write`).
+
+### Release
+
+Create and push a semver tag like `v1.0.6`:
+
+    git tag v1.0.6
+    git push origin v1.0.6
+
+The workflow `.github/workflows/publish-github-packages.yml` will build and publish:
+
+    @<github-owner>/geojson-schema
+
+to:
+
+    https://npm.pkg.github.com
+
+### Install from GitHub Packages
+
+Add the registry mapping for your scope in `.npmrc`:
+
+    @<github-owner>:registry=https://npm.pkg.github.com
+
+Then install:
+
+    npm install @<github-owner>/geojson-schema
