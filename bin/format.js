@@ -27,7 +27,6 @@ async function main() {
   return Object.assign(
     {
       $schema: 'http://json-schema.org/draft-07/schema#',
-      $id: `${baseURL}${path.basename(input)}on`,
     },
     schema
   );
